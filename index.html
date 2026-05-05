@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Surron Parts Finder — find the cheapest parts across every vendor</title>
-  <meta name="description" content="Search every vendor for Surron and Ultra Bee parts. See the cheapest price across Luna Cycle, Surron USA, AliExpress, eBay and more — sorted lowest first." />
+  <meta name="description" content="Search every vendor for Sur-Ron, Ultra Bee, and Talaria parts. See the cheapest price across Luna Cycle, Surron USA, AliExpress, eBay and more — sorted lowest first." />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -14,7 +14,7 @@
         <span class="brand-mark">⚡</span>
         <span class="brand-name">Surron Parts Finder</span>
       </div>
-      <p class="tagline">Find the cheapest parts across every vendor — Surron, Ultra Bee, Light Bee, and more.</p>
+      <p class="tagline">Find the cheapest parts across every vendor — Sur-Ron, Ultra Bee, Talaria X3, MX4, eRide, and more.</p>
     </div>
   </header>
 
@@ -22,6 +22,14 @@
     <div class="demo-banner" id="demoBanner" hidden>
       ⚠️ Sample data — prices and links are placeholders until verified. Don't share publicly yet.
     </div>
+
+    <section class="bike-picker">
+      <label class="bike-picker-label" for="bikeSelect">Your bike</label>
+      <select id="bikeSelect" aria-label="Select your bike">
+        <option value="">Show all parts</option>
+      </select>
+      <p class="bike-picker-hint" id="bikeHint">Pick your bike to filter parts and unlock the AI Fit Check.</p>
+    </section>
 
     <section class="controls">
       <input
@@ -45,6 +53,19 @@
       <ul class="parts-list" id="partsList"></ul>
     </section>
   </main>
+
+  <!-- AI Fit Check modal -->
+  <div class="modal" id="fitModal" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="fitModalTitle">
+      <button class="modal-close" data-close aria-label="Close">×</button>
+      <div class="ai-icon">⚡</div>
+      <h2 id="fitModalTitle">AI Fit Check</h2>
+      <p id="fitModalSubtitle" class="modal-subtitle"></p>
+      <div id="fitResult" class="fit-result"></div>
+      <button class="modal-cta" data-close>Got it</button>
+    </div>
+  </div>
 
   <footer class="site-footer">
     <div class="container">

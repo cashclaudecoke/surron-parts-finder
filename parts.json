@@ -2,45 +2,52 @@
   "_note": "PLACEHOLDER DATA. Verify every price and URL before launch. Each listing has isPlaceholder: true until Cash confirms it.",
   "lastUpdated": "2026-05-05",
   "categories": ["Brakes", "Pegs", "Battery", "Suspension", "Drivetrain", "Lights", "Frame", "Controller"],
+  "bikes": [
+    { "id": "surron-light-bee-x", "name": "Sur-Ron Light Bee X", "make": "Sur-Ron" },
+    { "id": "surron-ultra-bee",   "name": "Sur-Ron Ultra Bee",   "make": "Sur-Ron" },
+    { "id": "talaria-x3",         "name": "Talaria X3",          "make": "Talaria" },
+    { "id": "talaria-mx4",        "name": "Talaria MX4 (Sting)", "make": "Talaria" },
+    { "id": "talaria-eride",      "name": "Talaria eRide",       "make": "Talaria" }
+  ],
   "parts": [
     {
       "id": "ultra-bee-front-brake-caliper",
       "name": "Ultra Bee Front Brake Caliper",
       "category": "Brakes",
-      "bike": "Ultra Bee",
+      "fits": ["surron-ultra-bee"],
       "listings": [
-        { "vendor": "Luna Cycle", "price": 189.99, "shipping": 0, "url": "https://lunacycle.com", "inStock": true, "isPlaceholder": true },
-        { "vendor": "Surron USA", "price": 219.99, "shipping": 0, "url": "https://surronusa.com", "inStock": true, "isPlaceholder": true },
-        { "vendor": "AliExpress", "price": 142.50, "shipping": 25.00, "url": "https://www.aliexpress.com", "inStock": true, "isPlaceholder": true }
+        { "vendor": "Luna Cycle",  "price": 189.99, "shipping": 0, "url": "https://lunacycle.com",  "inStock": true,  "isPlaceholder": true },
+        { "vendor": "Surron USA",  "price": 219.99, "shipping": 0, "url": "https://surronusa.com",  "inStock": true,  "isPlaceholder": true },
+        { "vendor": "AliExpress",  "price": 142.50, "shipping": 25.00, "url": "https://www.aliexpress.com", "inStock": true, "isPlaceholder": true }
       ]
     },
     {
       "id": "ultra-bee-rear-brake-caliper",
       "name": "Ultra Bee Rear Brake Caliper",
       "category": "Brakes",
-      "bike": "Ultra Bee",
+      "fits": ["surron-ultra-bee"],
       "listings": [
-        { "vendor": "Luna Cycle", "price": 169.99, "shipping": 0, "url": "https://lunacycle.com", "inStock": true, "isPlaceholder": true },
-        { "vendor": "Surron USA", "price": 199.99, "shipping": 0, "url": "https://surronusa.com", "inStock": false, "isPlaceholder": true },
-        { "vendor": "Empire eBikes", "price": 184.00, "shipping": 12, "url": "https://empirebikes.com", "inStock": true, "isPlaceholder": true }
+        { "vendor": "Luna Cycle",     "price": 169.99, "shipping": 0,  "url": "https://lunacycle.com",   "inStock": true,  "isPlaceholder": true },
+        { "vendor": "Surron USA",     "price": 199.99, "shipping": 0,  "url": "https://surronusa.com",   "inStock": false, "isPlaceholder": true },
+        { "vendor": "Empire eBikes",  "price": 184.00, "shipping": 12, "url": "https://empirebikes.com", "inStock": true,  "isPlaceholder": true }
       ]
     },
     {
       "id": "wide-foot-pegs-cnc",
       "name": "CNC Wide Foot Pegs (pair)",
       "category": "Pegs",
-      "bike": "Light Bee / Ultra Bee",
+      "fits": ["surron-light-bee-x", "surron-ultra-bee", "talaria-x3", "talaria-mx4"],
       "listings": [
-        { "vendor": "Luna Cycle", "price": 79.99, "shipping": 0, "url": "https://lunacycle.com", "inStock": true, "isPlaceholder": true },
+        { "vendor": "Luna Cycle", "price": 79.99, "shipping": 0, "url": "https://lunacycle.com",     "inStock": true, "isPlaceholder": true },
         { "vendor": "AliExpress", "price": 38.50, "shipping": 8, "url": "https://www.aliexpress.com", "inStock": true, "isPlaceholder": true },
-        { "vendor": "eBay", "price": 55.00, "shipping": 0, "url": "https://www.ebay.com", "inStock": true, "isPlaceholder": true }
+        { "vendor": "eBay",       "price": 55.00, "shipping": 0, "url": "https://www.ebay.com",      "inStock": true, "isPlaceholder": true }
       ]
     },
     {
       "id": "ultra-bee-60v-55ah-battery",
       "name": "Ultra Bee 60V 55Ah Battery Pack",
       "category": "Battery",
-      "bike": "Ultra Bee",
+      "fits": ["surron-ultra-bee"],
       "listings": [
         { "vendor": "Luna Cycle", "price": 1899.00, "shipping": 0, "url": "https://lunacycle.com", "inStock": true, "isPlaceholder": true },
         { "vendor": "Surron USA", "price": 2099.00, "shipping": 0, "url": "https://surronusa.com", "inStock": true, "isPlaceholder": true }
@@ -50,53 +57,53 @@
       "id": "light-bee-rear-shock",
       "name": "DNM Burner-RCP 2S Rear Shock",
       "category": "Suspension",
-      "bike": "Light Bee X",
+      "fits": ["surron-light-bee-x"],
       "listings": [
-        { "vendor": "Luna Cycle", "price": 549.00, "shipping": 0, "url": "https://lunacycle.com", "inStock": true, "isPlaceholder": true },
-        { "vendor": "Empire eBikes", "price": 525.00, "shipping": 18, "url": "https://empirebikes.com", "inStock": true, "isPlaceholder": true },
-        { "vendor": "AliExpress", "price": 389.00, "shipping": 35, "url": "https://www.aliexpress.com", "inStock": true, "isPlaceholder": true }
+        { "vendor": "Luna Cycle",    "price": 549.00, "shipping": 0,  "url": "https://lunacycle.com",     "inStock": true, "isPlaceholder": true },
+        { "vendor": "Empire eBikes", "price": 525.00, "shipping": 18, "url": "https://empirebikes.com",   "inStock": true, "isPlaceholder": true },
+        { "vendor": "AliExpress",    "price": 389.00, "shipping": 35, "url": "https://www.aliexpress.com", "inStock": true, "isPlaceholder": true }
       ]
     },
     {
       "id": "light-bee-front-fork",
       "name": "Fast Ace Front Fork (inverted)",
       "category": "Suspension",
-      "bike": "Light Bee X",
+      "fits": ["surron-light-bee-x"],
       "listings": [
-        { "vendor": "Luna Cycle", "price": 689.00, "shipping": 0, "url": "https://lunacycle.com", "inStock": true, "isPlaceholder": true },
-        { "vendor": "Surron USA", "price": 749.00, "shipping": 0, "url": "https://surronusa.com", "inStock": false, "isPlaceholder": true },
-        { "vendor": "AliExpress", "price": 458.00, "shipping": 45, "url": "https://www.aliexpress.com", "inStock": true, "isPlaceholder": true }
+        { "vendor": "Luna Cycle", "price": 689.00, "shipping": 0,  "url": "https://lunacycle.com",     "inStock": true,  "isPlaceholder": true },
+        { "vendor": "Surron USA", "price": 749.00, "shipping": 0,  "url": "https://surronusa.com",     "inStock": false, "isPlaceholder": true },
+        { "vendor": "AliExpress", "price": 458.00, "shipping": 45, "url": "https://www.aliexpress.com", "inStock": true,  "isPlaceholder": true }
       ]
     },
     {
       "id": "rear-sprocket-58t",
       "name": "Steel Rear Sprocket (58T)",
       "category": "Drivetrain",
-      "bike": "Light Bee / Ultra Bee",
+      "fits": ["surron-light-bee-x", "surron-ultra-bee"],
       "listings": [
-        { "vendor": "Luna Cycle", "price": 89.00, "shipping": 0, "url": "https://lunacycle.com", "inStock": true, "isPlaceholder": true },
-        { "vendor": "Empire eBikes", "price": 79.99, "shipping": 6, "url": "https://empirebikes.com", "inStock": true, "isPlaceholder": true },
-        { "vendor": "AliExpress", "price": 42.00, "shipping": 9, "url": "https://www.aliexpress.com", "inStock": true, "isPlaceholder": true }
+        { "vendor": "Luna Cycle",    "price": 89.00, "shipping": 0, "url": "https://lunacycle.com",     "inStock": true, "isPlaceholder": true },
+        { "vendor": "Empire eBikes", "price": 79.99, "shipping": 6, "url": "https://empirebikes.com",   "inStock": true, "isPlaceholder": true },
+        { "vendor": "AliExpress",    "price": 42.00, "shipping": 9, "url": "https://www.aliexpress.com", "inStock": true, "isPlaceholder": true }
       ]
     },
     {
       "id": "led-headlight-upgrade",
       "name": "LED Headlight Upgrade Kit",
       "category": "Lights",
-      "bike": "Light Bee / Ultra Bee",
+      "fits": ["surron-light-bee-x", "surron-ultra-bee", "talaria-x3", "talaria-mx4", "talaria-eride"],
       "listings": [
-        { "vendor": "Luna Cycle", "price": 129.00, "shipping": 0, "url": "https://lunacycle.com", "inStock": true, "isPlaceholder": true },
-        { "vendor": "Amazon", "price": 89.99, "shipping": 0, "url": "https://www.amazon.com", "inStock": true, "isPlaceholder": true },
-        { "vendor": "AliExpress", "price": 54.00, "shipping": 7, "url": "https://www.aliexpress.com", "inStock": true, "isPlaceholder": true }
+        { "vendor": "Luna Cycle", "price": 129.00, "shipping": 0, "url": "https://lunacycle.com",     "inStock": true, "isPlaceholder": true },
+        { "vendor": "Amazon",     "price": 89.99,  "shipping": 0, "url": "https://www.amazon.com",    "inStock": true, "isPlaceholder": true },
+        { "vendor": "AliExpress", "price": 54.00,  "shipping": 7, "url": "https://www.aliexpress.com", "inStock": true, "isPlaceholder": true }
       ]
     },
     {
       "id": "controller-upgrade-100a",
       "name": "100A Sine-Wave Motor Controller",
       "category": "Controller",
-      "bike": "Light Bee X",
+      "fits": ["surron-light-bee-x"],
       "listings": [
-        { "vendor": "Luna Cycle", "price": 449.00, "shipping": 0, "url": "https://lunacycle.com", "inStock": true, "isPlaceholder": true },
+        { "vendor": "Luna Cycle",    "price": 449.00, "shipping": 0,  "url": "https://lunacycle.com",   "inStock": true, "isPlaceholder": true },
         { "vendor": "Empire eBikes", "price": 419.00, "shipping": 14, "url": "https://empirebikes.com", "inStock": true, "isPlaceholder": true }
       ]
     },
@@ -104,11 +111,62 @@
       "id": "frame-protector-skid-plate",
       "name": "Aluminum Skid Plate / Frame Protector",
       "category": "Frame",
-      "bike": "Light Bee / Ultra Bee",
+      "fits": ["surron-light-bee-x", "surron-ultra-bee"],
       "listings": [
-        { "vendor": "Luna Cycle", "price": 119.00, "shipping": 0, "url": "https://lunacycle.com", "inStock": true, "isPlaceholder": true },
-        { "vendor": "AliExpress", "price": 58.00, "shipping": 12, "url": "https://www.aliexpress.com", "inStock": true, "isPlaceholder": true },
-        { "vendor": "eBay", "price": 89.00, "shipping": 0, "url": "https://www.ebay.com", "inStock": true, "isPlaceholder": true }
+        { "vendor": "Luna Cycle", "price": 119.00, "shipping": 0,  "url": "https://lunacycle.com",     "inStock": true, "isPlaceholder": true },
+        { "vendor": "AliExpress", "price": 58.00,  "shipping": 12, "url": "https://www.aliexpress.com", "inStock": true, "isPlaceholder": true },
+        { "vendor": "eBay",       "price": 89.00,  "shipping": 0,  "url": "https://www.ebay.com",      "inStock": true, "isPlaceholder": true }
+      ]
+    },
+    {
+      "id": "talaria-brake-pad-set",
+      "name": "Talaria Sintered Brake Pads (front + rear set)",
+      "category": "Brakes",
+      "fits": ["talaria-x3", "talaria-mx4"],
+      "listings": [
+        { "vendor": "Luna Cycle",    "price": 65.00, "shipping": 0,  "url": "https://lunacycle.com",     "inStock": true, "isPlaceholder": true },
+        { "vendor": "Empire eBikes", "price": 59.99, "shipping": 6,  "url": "https://empirebikes.com",   "inStock": true, "isPlaceholder": true },
+        { "vendor": "AliExpress",    "price": 28.00, "shipping": 7,  "url": "https://www.aliexpress.com", "inStock": true, "isPlaceholder": true }
+      ]
+    },
+    {
+      "id": "talaria-72v-battery",
+      "name": "Talaria 72V 45Ah Battery Pack",
+      "category": "Battery",
+      "fits": ["talaria-x3", "talaria-mx4"],
+      "listings": [
+        { "vendor": "Luna Cycle",    "price": 1799.00, "shipping": 0,  "url": "https://lunacycle.com",   "inStock": true, "isPlaceholder": true },
+        { "vendor": "Empire eBikes", "price": 1849.00, "shipping": 0,  "url": "https://empirebikes.com", "inStock": true, "isPlaceholder": true }
+      ]
+    },
+    {
+      "id": "talaria-mx4-rear-shock",
+      "name": "Talaria MX4 Rear Shock (RFY adjustable)",
+      "category": "Suspension",
+      "fits": ["talaria-mx4"],
+      "listings": [
+        { "vendor": "Luna Cycle", "price": 459.00, "shipping": 0,  "url": "https://lunacycle.com",     "inStock": true, "isPlaceholder": true },
+        { "vendor": "AliExpress", "price": 318.00, "shipping": 30, "url": "https://www.aliexpress.com", "inStock": true, "isPlaceholder": true }
+      ]
+    },
+    {
+      "id": "talaria-x3-front-fender",
+      "name": "Talaria X3 Front Fender (carbon fiber)",
+      "category": "Frame",
+      "fits": ["talaria-x3"],
+      "listings": [
+        { "vendor": "Luna Cycle", "price": 119.00, "shipping": 0, "url": "https://lunacycle.com",     "inStock": true, "isPlaceholder": true },
+        { "vendor": "AliExpress", "price": 68.00,  "shipping": 9, "url": "https://www.aliexpress.com", "inStock": true, "isPlaceholder": true }
+      ]
+    },
+    {
+      "id": "talaria-eride-battery",
+      "name": "Talaria eRide 24V Replacement Battery",
+      "category": "Battery",
+      "fits": ["talaria-eride"],
+      "listings": [
+        { "vendor": "Luna Cycle", "price": 349.00, "shipping": 0, "url": "https://lunacycle.com", "inStock": true, "isPlaceholder": true },
+        { "vendor": "Amazon",     "price": 289.99, "shipping": 0, "url": "https://www.amazon.com", "inStock": true, "isPlaceholder": true }
       ]
     }
   ]

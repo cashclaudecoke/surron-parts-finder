@@ -1,0 +1,315 @@
+:root {
+  --bg: #0b0d10;
+  --bg-card: #14171c;
+  --bg-card-hover: #1a1e25;
+  --border: #232830;
+  --text: #f4f6f8;
+  --text-dim: #9aa3ad;
+  --accent: #d6ff3d;
+  --accent-dim: #a6cc20;
+  --danger: #ff7a59;
+  --success: #5ddca5;
+  --radius: 10px;
+  --shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.hero {
+  padding: 48px 0 32px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, #11151a 0%, var(--bg) 100%);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+}
+.brand-mark {
+  font-size: 24px;
+  filter: drop-shadow(0 0 6px rgba(214, 255, 61, 0.5));
+}
+.brand-name {
+  background: linear-gradient(90deg, var(--text) 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.tagline {
+  margin: 12px 0 0;
+  color: var(--text-dim);
+  font-size: 16px;
+  max-width: 600px;
+}
+
+.demo-banner {
+  background: rgba(255, 122, 89, 0.12);
+  border: 1px solid rgba(255, 122, 89, 0.4);
+  color: var(--danger);
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  margin: 24px 0 0;
+  font-size: 14px;
+}
+
+.controls {
+  margin: 24px 0 16px;
+}
+
+#search {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+#search:focus {
+  border-color: var(--accent);
+}
+
+.filters {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.filter-chip {
+  padding: 6px 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-dim);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+.filter-chip:hover {
+  background: var(--bg-card-hover);
+  color: var(--text);
+}
+.filter-chip.active {
+  background: var(--accent);
+  color: #0b0d10;
+  border-color: var(--accent);
+  font-weight: 600;
+}
+
+.result-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 16px 0 12px;
+  color: var(--text-dim);
+  font-size: 14px;
+}
+
+#sortBy {
+  background: var(--bg-card);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.parts-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.part {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  transition: border-color 0.12s ease;
+}
+.part:hover {
+  border-color: #2c333d;
+}
+
+.part-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.part-info { flex: 1; min-width: 0; }
+
+.part-name {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0 0 4px;
+  color: var(--text);
+}
+
+.part-meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 12px;
+}
+.tag {
+  background: rgba(214, 255, 61, 0.08);
+  color: var(--accent-dim);
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(214, 255, 61, 0.2);
+}
+.tag.bike { background: rgba(154, 163, 173, 0.1); color: var(--text-dim); border-color: var(--border); }
+
+.part-price {
+  text-align: right;
+  flex-shrink: 0;
+}
+.price-best {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+}
+.price-vendor {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+.price-savings {
+  font-size: 11px;
+  color: var(--success);
+  margin-top: 2px;
+}
+
+.expand-btn {
+  margin-top: 12px;
+  background: transparent;
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.12s ease;
+  width: 100%;
+  text-align: left;
+}
+.expand-btn:hover {
+  color: var(--text);
+  border-color: #2c333d;
+}
+
+.listings {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  display: none;
+}
+.part.expanded .listings { display: block; }
+.part.expanded .expand-btn { display: none; }
+
+.listing {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 14px;
+  gap: 12px;
+}
+.listing + .listing {
+  border-top: 1px solid var(--border);
+}
+.listing-vendor {
+  flex: 1;
+  min-width: 0;
+}
+.listing-vendor strong { color: var(--text); }
+.listing-vendor small {
+  display: block;
+  color: var(--text-dim);
+  font-size: 11px;
+  margin-top: 2px;
+}
+.listing-price {
+  font-weight: 600;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.listing-link {
+  background: var(--accent);
+  color: #0b0d10;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.listing-link:hover { text-decoration: none; background: var(--accent-dim); }
+
+.out-of-stock {
+  opacity: 0.5;
+}
+.out-of-stock .listing-link {
+  background: var(--border);
+  color: var(--text-dim);
+  pointer-events: none;
+}
+
+.empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-dim);
+}
+
+.site-footer {
+  margin-top: 60px;
+  padding: 24px 0;
+  border-top: 1px solid var(--border);
+  color: var(--text-dim);
+  font-size: 13px;
+  text-align: center;
+}
+.site-footer p { margin: 4px 0; }
+
+@media (max-width: 600px) {
+  .part-row { flex-direction: column; }
+  .part-price { text-align: left; }
+  .price-best { font-size: 20px; }
+}

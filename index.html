@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Surron Parts Finder — find the cheapest parts across every vendor</title>
+  <meta name="description" content="Search every vendor for Surron and Ultra Bee parts. See the cheapest price across Luna Cycle, Surron USA, AliExpress, eBay and more — sorted lowest first." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="container">
+      <div class="brand">
+        <span class="brand-mark">⚡</span>
+        <span class="brand-name">Surron Parts Finder</span>
+      </div>
+      <p class="tagline">Find the cheapest parts across every vendor — Surron, Ultra Bee, Light Bee, and more.</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="demo-banner" id="demoBanner" hidden>
+      ⚠️ Sample data — prices and links are placeholders until verified. Don't share publicly yet.
+    </div>
+
+    <section class="controls">
+      <input
+        type="search"
+        id="search"
+        placeholder="Search parts (e.g. brake, peg, battery)…"
+        autocomplete="off"
+      />
+      <div class="filters" id="filters"></div>
+    </section>
+
+    <section class="results">
+      <div class="result-meta">
+        <span id="resultCount">Loading…</span>
+        <select id="sortBy" aria-label="Sort by">
+          <option value="price-asc">Cheapest first</option>
+          <option value="price-desc">Most expensive first</option>
+          <option value="name-asc">A–Z</option>
+        </select>
+      </div>
+      <ul class="parts-list" id="partsList"></ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Data curated by hand. Click a vendor link to verify the latest price — vendors update inventory often.</p>
+      <p>
+        <a href="https://github.com/cashclaudecoke/surron-parts-finder" target="_blank" rel="noopener">GitHub</a>
+        · No tracking · No accounts · Free forever
+      </p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

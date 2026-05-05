@@ -1,7 +1,7 @@
-// Surron Parts Finder — V1.1 (multi-bike + AI Fit Check)
-// Loads parts.json, filters by bike + category + search, sorts by price.
-// AI Fit Check uses curated `fits` data; designed to swap in a real
-// Claude API call (via a serverless backend) without changing the UI.
+// Surron Parts Finder — V1.2 (bikelife visual + in-modal bike picker)
+// AI Fit Check uses curated `fits` data. The runFitCheck() body can be
+// swapped for a real Claude API call (via a serverless proxy) without
+// changing the UI.
 
 const state = {
   bikes: [],
@@ -12,6 +12,7 @@ const state = {
   query: '',
   sort: 'price-asc',
   expanded: new Set(),
+  pendingFitPart: null, // part the user wanted to check before picking a bike
 };
 
 const els = {
@@ -28,6 +29,8 @@ const els = {
   fitTitle: document.getElementById('fitModalTitle'),
   fitSubtitle: document.getElementById('fitModalSubtitle'),
   fitResult: document.getElementById('fitResult'),
+  fitBikePicker: document.getElementById('fitBikePicker'),
+  modalBikeSelect: document.getElementById('modalBikeSelect'),
 };
 
 init();
@@ -45,7 +48,7 @@ async function init() {
     );
     els.banner.hidden = !anyPlaceholder;
 
-    renderBikePicker();
+    populateBikeOptions();
     renderFilters();
     bindEvents();
     render();
@@ -66,14 +69,18 @@ function bindEvents() {
     render();
   });
   els.bikeSelect.addEventListener('change', (e) => {
-    state.selectedBike = e.target.value;
-    if (state.selectedBike) {
-      localStorage.setItem('selectedBike', state.selectedBike);
-    } else {
-      localStorage.removeItem('selectedBike');
-    }
-    updateBikePickerState();
+    setSelectedBike(e.target.value);
     render();
+  });
+  els.modalBikeSelect.addEventListener('change', (e) => {
+    if (!e.target.value) return;
+    setSelectedBike(e.target.value);
+    // sync the main picker, then run the check for the part user wanted
+    if (state.pendingFitPart) {
+      const part = state.pendingFitPart;
+      state.pendingFitPart = null;
+      runFlow(part);
+    }
   });
   els.modal.addEventListener('click', (e) => {
     if (e.target.dataset.close !== undefined) closeModal();
@@ -83,8 +90,18 @@ function bindEvents() {
   });
 }
 
-function renderBikePicker() {
-  const opts = ['<option value="">Show all parts</option>']
+function setSelectedBike(id) {
+  state.selectedBike = id;
+  if (id) localStorage.setItem('selectedBike', id);
+  else localStorage.removeItem('selectedBike');
+  els.bikeSelect.value = id;
+  els.modalBikeSelect.value = id;
+  updateBikePickerState();
+  render();
+}
+
+function populateBikeOptions() {
+  const opts = ['<option value="">— SHOW ALL PARTS —</option>']
     .concat(
       state.bikes.map(
         (b) =>
@@ -95,6 +112,17 @@ function renderBikePicker() {
     )
     .join('');
   els.bikeSelect.innerHTML = opts;
+
+  const modalOpts = ['<option value="">— select your bike —</option>']
+    .concat(
+      state.bikes.map(
+        (b) =>
+          `<option value="${b.id}">${escapeHtml(b.name)}</option>`
+      )
+    )
+    .join('');
+  els.modalBikeSelect.innerHTML = modalOpts;
+
   updateBikePickerState();
 }
 
@@ -102,11 +130,11 @@ function updateBikePickerState() {
   const bike = state.bikes.find((b) => b.id === state.selectedBike);
   if (bike) {
     els.bikePicker.classList.add('locked');
-    els.bikeHint.textContent = `Showing parts that fit your ${bike.name}. AI Fit Check is unlocked.`;
+    els.bikeHint.textContent = `Filtering to parts that fit your ${bike.name}.`;
   } else {
     els.bikePicker.classList.remove('locked');
     els.bikeHint.textContent =
-      'Pick your bike to filter parts and unlock the AI Fit Check.';
+      'Tap below — we filter the catalog to parts that actually fit.';
   }
 }
 
@@ -165,7 +193,6 @@ function sorted(parts) {
 }
 
 function fmtPrice(n) { return `$${n.toFixed(2)}`; }
-
 function bikeName(id) {
   const b = state.bikes.find((x) => x.id === id);
   return b ? b.name : id;
@@ -175,12 +202,12 @@ function render() {
   const list = sorted(filtered());
   const bike = state.bikes.find((b) => b.id === state.selectedBike);
   const meta = bike
-    ? `${list.length} part${list.length === 1 ? '' : 's'} for your ${bike.name}`
-    : `${list.length} part${list.length === 1 ? '' : 's'}`;
+    ? `${list.length} parts · ${bike.name}`
+    : `${list.length} parts · all bikes`;
   els.count.textContent = meta;
 
   if (list.length === 0) {
-    els.list.innerHTML = `<li class="empty">No parts match your search${
+    els.list.innerHTML = `<li class="empty">No parts match${
       bike ? ` for the ${bike.name}` : ''
     }.</li>`;
     return;
@@ -212,7 +239,7 @@ function renderPart(part) {
     .map((l) => {
       const total = totalPrice(l);
       const shippingNote = l.shipping
-        ? `+ ${fmtPrice(l.shipping)} shipping`
+        ? `+ ${fmtPrice(l.shipping)} ship`
         : 'Free shipping';
       return `
         <div class="listing ${l.inStock ? '' : 'out-of-stock'}">
@@ -234,21 +261,21 @@ function renderPart(part) {
           <h3 class="part-name">${escapeHtml(part.name)}</h3>
           <div class="part-meta">
             <span class="tag">${escapeHtml(part.category)}</span>
-            <span class="tag bike">Fits: ${escapeHtml(fitsList)}</span>
+            <span class="tag bike">FITS: ${escapeHtml(fitsList).toUpperCase()}</span>
           </div>
         </div>
         <div class="part-price">
           <div class="price-best">${fmtPrice(totalPrice(best))}</div>
-          <div class="price-vendor">at ${escapeHtml(best.vendor)}</div>
-          ${savings > 5 ? `<div class="price-savings">Save ${fmtPrice(savings)} vs highest</div>` : ''}
+          <div class="price-vendor">${escapeHtml(best.vendor)}</div>
+          ${savings > 5 ? `<div class="price-savings">SAVE ${fmtPrice(savings)}</div>` : ''}
         </div>
       </div>
       <div class="part-actions">
         <button class="fit-btn" data-id="${escapeAttr(part.id)}">
-          <span class="ai-spark">✨</span>AI Fit Check
+          <span class="ai-spark">⚡</span>AI FIT CHECK
         </button>
         <button class="expand-btn" data-id="${escapeAttr(part.id)}">
-          See all ${part.listings.length} option${part.listings.length === 1 ? '' : 's'} →
+          ALL ${part.listings.length} OPTION${part.listings.length === 1 ? '' : 'S'} →
         </button>
       </div>
       <div class="listings">${listings}</div>
@@ -257,38 +284,38 @@ function renderPart(part) {
 }
 
 // ─── AI Fit Check ────────────────────────────────────────────────────
-// Uses the curated `fits` list as the source of truth. To upgrade to
-// a real Claude API call (e.g., for fuzzy questions like "will this
-// work with my custom controller?"), replace the body of `runFitCheck`
-// with a fetch() to a serverless endpoint that proxies the Anthropic API.
-// The backend should hold the API key — never expose it client-side.
+// V1: uses curated `fits` data. To upgrade: replace the body of
+// runFitCheck() with a fetch() to a serverless endpoint that proxies
+// the Anthropic API. Backend must hold the API key.
 
 function openFitCheck(partId) {
   const part = state.parts.find((p) => p.id === partId);
   if (!part) return;
+  runFlow(part);
+}
 
+function runFlow(part) {
   els.fitTitle.textContent = part.name;
+  els.fitResult.hidden = true;
 
   if (!state.selectedBike) {
-    els.fitSubtitle.textContent = 'Pick your bike first';
-    els.fitResult.className = 'fit-result';
-    els.fitResult.innerHTML = `
-      <div class="fit-reason">
-        Select your bike at the top of the page (Sur-Ron Light Bee X, Ultra Bee, Talaria X3, MX4, eRide). The AI Fit Check needs to know what you ride to check compatibility.
-      </div>
-    `;
+    state.pendingFitPart = part;
+    els.fitSubtitle.textContent = 'Tell us what you ride and we\'ll check the fit.';
+    els.fitBikePicker.hidden = false;
+    els.modalBikeSelect.value = '';
     showModal();
     return;
   }
 
   const bike = state.bikes.find((b) => b.id === state.selectedBike);
-  els.fitSubtitle.textContent = `Checking against your ${bike.name}…`;
+  els.fitBikePicker.hidden = true;
+  els.fitSubtitle.textContent = `Cross-checking with your ${bike.name}…`;
+  els.fitResult.hidden = false;
   els.fitResult.className = 'fit-result loading';
-  els.fitResult.innerHTML = `<span class="fit-spinner"></span> Analyzing fit…`;
+  els.fitResult.innerHTML = `<span class="fit-spinner"></span> ANALYZING FIT…`;
   showModal();
 
-  // Small delay so the loading state registers — feels intentional.
-  setTimeout(() => runFitCheck(part, bike), 600);
+  setTimeout(() => runFitCheck(part, bike), 700);
 }
 
 function runFitCheck(part, bike) {
@@ -303,30 +330,30 @@ function runFitCheck(part, bike) {
 
   if (fitsThisBike) {
     verdictClass = 'fits';
-    verdictText = `✅ Yes — fits your ${bike.name}`;
-    reason = `<strong>${escapeHtml(part.name)}</strong> is confirmed compatible with the ${escapeHtml(bike.name)}. ${
+    verdictText = `✅ FITS YOUR ${bike.name.toUpperCase()}`;
+    reason = `<strong>${escapeHtml(part.name)}</strong> is confirmed compatible with your ${escapeHtml(bike.name)}. ${
       fitList.length > 1
-        ? `It also fits: ${fitList.filter((n) => n !== bike.name).map(escapeHtml).join(', ')}.`
-        : `This part is specific to your bike.`
+        ? `Also fits: ${fitList.filter((n) => n !== bike.name).map(escapeHtml).join(', ')}.`
+        : `Specific to your bike.`
     }`;
     tip = `Always double-check year/trim on the vendor page before ordering. Some 2023+ models use slightly different mounts.`;
   } else if (sameMake) {
     verdictClass = 'maybe';
-    verdictText = `⚠️ Probably not — same make, different model`;
-    reason = `<strong>${escapeHtml(part.name)}</strong> is listed for: ${fitList.map(escapeHtml).join(', ')}. Your ${escapeHtml(bike.name)} is the same brand but a different model, so mounts and dimensions usually differ. Possible the part fits with modification, but don't assume.`;
-    tip = `Message the vendor and ask "Will this fit a ${bike.name}?" — most reply within a day.`;
+    verdictText = `⚠ PROBABLY NOT — DIFFERENT MODEL`;
+    reason = `<strong>${escapeHtml(part.name)}</strong> is listed for: ${fitList.map(escapeHtml).join(', ')}. Your ${escapeHtml(bike.name)} is the same brand but a different model — mounts and dimensions usually differ.`;
+    tip = `Message the vendor: "Will this fit a ${bike.name}?" — most reply within a day.`;
   } else {
     verdictClass = 'no-fit';
-    verdictText = `❌ No — won't fit your ${bike.name}`;
-    reason = `<strong>${escapeHtml(part.name)}</strong> is built for: ${fitList.map(escapeHtml).join(', ')}. Different brand and platform from your ${escapeHtml(bike.name)} — mounting points, frame geometry, and electrical specs won't match.`;
-    tip = `Try filtering parts by your bike at the top of the page to skip incompatible parts entirely.`;
+    verdictText = `❌ WON'T FIT YOUR ${bike.name.toUpperCase()}`;
+    reason = `<strong>${escapeHtml(part.name)}</strong> is built for: ${fitList.map(escapeHtml).join(', ')}. Different brand and platform — mounting points, frame geometry, and electrical specs won't match.`;
+    tip = `Filter parts by your bike at the top of the page to skip incompatible ones.`;
   }
 
   els.fitResult.className = 'fit-result';
   els.fitResult.innerHTML = `
     <div class="verdict ${verdictClass}">${verdictText}</div>
     <div class="fit-reason">${reason}</div>
-    <div class="fit-tip">💡 ${tip}</div>
+    <div class="fit-tip">⚡ ${tip}</div>
   `;
 }
 
@@ -337,6 +364,7 @@ function showModal() {
 function closeModal() {
   els.modal.hidden = true;
   document.body.style.overflow = '';
+  state.pendingFitPart = null;
 }
 
 function escapeHtml(s) {

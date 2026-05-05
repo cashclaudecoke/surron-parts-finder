@@ -3,39 +3,52 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Surron Parts Finder — find the cheapest parts across every vendor</title>
-  <meta name="description" content="Search every vendor for Sur-Ron, Ultra Bee, and Talaria parts. See the cheapest price across Luna Cycle, Surron USA, AliExpress, eBay and more — sorted lowest first." />
+  <title>Surron Parts Finder — never overpay for parts again</title>
+  <meta name="description" content="Compare Sur-Ron, Ultra Bee, and Talaria parts across every vendor. Find the cheapest price in seconds. Built for riders, by riders." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div class="grain"></div>
+
   <header class="hero">
     <div class="container">
       <div class="brand">
-        <span class="brand-mark">⚡</span>
-        <span class="brand-name">Surron Parts Finder</span>
+        <span class="brand-bolt">⚡</span>
+        <span class="brand-name">SURRON<span class="brand-name-thin"> PARTS</span></span>
+        <span class="brand-tag">v1</span>
       </div>
-      <p class="tagline">Find the cheapest parts across every vendor — Sur-Ron, Ultra Bee, Talaria X3, MX4, eRide, and more.</p>
+      <h1 class="hero-title">Don't get robbed<br/><span class="hero-accent">at the parts counter.</span></h1>
+      <p class="hero-sub">Every Sur-Ron, Ultra Bee, and Talaria part. Every vendor. Cheapest price first.</p>
+      <div class="hazard-stripe" aria-hidden="true"></div>
     </div>
   </header>
 
   <main class="container">
     <div class="demo-banner" id="demoBanner" hidden>
-      ⚠️ Sample data — prices and links are placeholders until verified. Don't share publicly yet.
+      ⚠ DEMO DATA — prices are placeholders until verified. Don't share publicly yet.
     </div>
 
     <section class="bike-picker">
-      <label class="bike-picker-label" for="bikeSelect">Your bike</label>
+      <div class="bike-picker-head">
+        <span class="bike-picker-num">01</span>
+        <div>
+          <div class="bike-picker-label">Pick your bike</div>
+          <div class="bike-picker-hint" id="bikeHint">Tap below — we filter the catalog to parts that actually fit.</div>
+        </div>
+      </div>
       <select id="bikeSelect" aria-label="Select your bike">
-        <option value="">Show all parts</option>
+        <option value="">— SHOW ALL PARTS —</option>
       </select>
-      <p class="bike-picker-hint" id="bikeHint">Pick your bike to filter parts and unlock the AI Fit Check.</p>
     </section>
 
     <section class="controls">
       <input
         type="search"
         id="search"
-        placeholder="Search parts (e.g. brake, peg, battery)…"
+        placeholder="Search: brake, peg, battery, shock…"
         autocomplete="off"
       />
       <div class="filters" id="filters"></div>
@@ -59,20 +72,32 @@
     <div class="modal-backdrop" data-close></div>
     <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="fitModalTitle">
       <button class="modal-close" data-close aria-label="Close">×</button>
-      <div class="ai-icon">⚡</div>
-      <h2 id="fitModalTitle">AI Fit Check</h2>
+      <div class="ai-icon">
+        <span class="ai-bolt">⚡</span>
+      </div>
+      <div class="ai-eyebrow">AI Fit Check</div>
+      <h2 id="fitModalTitle">—</h2>
       <p id="fitModalSubtitle" class="modal-subtitle"></p>
-      <div id="fitResult" class="fit-result"></div>
+
+      <div id="fitBikePicker" class="fit-bike-picker" hidden>
+        <label for="modalBikeSelect">Choose your bike</label>
+        <select id="modalBikeSelect">
+          <option value="">— select your bike —</option>
+        </select>
+      </div>
+
+      <div id="fitResult" class="fit-result" hidden></div>
+
       <button class="modal-cta" data-close>Got it</button>
     </div>
   </div>
 
   <footer class="site-footer">
+    <div class="hazard-stripe" aria-hidden="true"></div>
     <div class="container">
-      <p>Data curated by hand. Click a vendor link to verify the latest price — vendors update inventory often.</p>
+      <p>BUILT BY RIDERS · DATA CURATED BY HAND · NO TRACKING · NO ACCOUNTS · FREE FOREVER</p>
       <p>
-        <a href="https://github.com/cashclaudecoke/surron-parts-finder" target="_blank" rel="noopener">GitHub</a>
-        · No tracking · No accounts · Free forever
+        <a href="https://github.com/cashclaudecoke/surron-parts-finder" target="_blank" rel="noopener">CODE ON GITHUB</a>
       </p>
     </div>
   </footer>
